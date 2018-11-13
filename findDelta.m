@@ -1,24 +1,24 @@
-function newDelta = findDelta(x,oldDelta,numBins)
+function newDelta = findDelta(x,oldDelta,numBins,n)
 
 %% Preliminaries 
 
 % Amount to increase
-smallDelta = ones(12,1)*3;
+smallDelta = ones(n,1)*3;
 
 % Rate of decrease
-nu = ones(12,1)*(numBins-1.2); 
+nu = ones(n,1)*(numBins-1.2); 
 
 % Minimum bin size
-L = ones(12,1)*2.5; %droneDist(10)/2
+L = ones(n,1)*2.5; %droneDist(10)/2
 
 % Spectum of A matrix
-lambda = ones(12,1);
+lambda = ones(n,1);
 
 % Ratio factor for each state in X
 h = 2*x./(numBins*oldDelta);
 
 % Update factor
-Q_bar = zeros(12,1);
+Q_bar = zeros(n,1);
 
 
 if any(abs(h) > 1)
