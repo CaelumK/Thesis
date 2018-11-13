@@ -19,14 +19,14 @@ R = eye(2*numDrones);
 
 delta_0 = 20*ones(12,1);
 
-[dx, delta] = findPos(A,B,K,x0',delta_0);
+[dx, delta] = findPos(A,B,K,x0',delta_0,12);
 
 x = [x0 ; dx'];
 
 %% System
 
 for i = tspan % run though the time span
-    [dx, delta] = findPos(A,B,K,x(end,:)',delta);
+    [dx, delta] = findPos(A,B,K,x(end,:)',delta,12);
     x = [x ; dx' - final_positions];    
 end
 
