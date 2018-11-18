@@ -46,7 +46,7 @@ end
  R = eye(2*numDrones); % 2 because 2 dimensional
  [K,~,~] = lqrd(A,B,Q,R,t_sample);
  
- delta_0 = ones(n,1)*20; % something in the overflow region
+ delta_0 = ones(n,1)*40; % something in the overflow region
  delta = delta_0;
  x = zeros(n,length(tspan));
  x(:,1) = x0;
