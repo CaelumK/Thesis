@@ -1,4 +1,4 @@
-function newDelta = findDelta(x,oldDelta,numBins)
+function newDelta = findDeltaC(x,oldDelta,numBins)
 %% Preliminaries 
 % Amount to increase
 smallDelta = 3;
