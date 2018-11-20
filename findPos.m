@@ -8,7 +8,7 @@ partition = delta*(-(numBins-2)/2:(numBins-2)/2); % codewords corresponding to e
 codebook = [0 (partition(1:length(partition)-1)+partition(2:length(partition)))/2 0]; % initial guess of a partition. 
 [~,x_hat] = quantiz(x,partition,codebook); % x_hat holds the quantized values of x. 
 
-new_delta = delta;
+new_delta(1:n,1) = delta;
 
 %% Get position
 w_t = normrnd(0,1,[n,1]);

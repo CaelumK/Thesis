@@ -53,7 +53,7 @@ end
  
  % Find our x
  for i = 2:length(tspan)
-     [dx,delta] = findPos(A, B, K, x(:,i-1), delta, n);
+     [dx,delta] = findPos(A, B, K, x(:,i-1), delta, n, numDrones);
      x(:,i) = dx - droneDelta;
      y(:,i) = (C*x(:,i))';
  end
