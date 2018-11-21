@@ -1,4 +1,4 @@
-function [A,B,C,D] = getStateSpace()
+function [A,B,C,D] = twoDStateSpace()
 
 A = [1 0 1 0 0 0 0 0 0 0 0 0;
      0 1 0 1 0 0 0 0 0 0 0 0;
@@ -35,6 +35,6 @@ A = [1 0 1 0 0 0 0 0 0 0 0 0;
       0 0 0 0 0 0 1 0 0 0 -1 0;
       0 0 0 0 0 0 0 1 0 0 0 -1];
   
- D = [0 0 0 0 0 0 0 0 0 0 0 0]';
+ D = zeros(8,6);
  
 end

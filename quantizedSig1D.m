@@ -4,13 +4,13 @@ close all;
 
 %% Initializing model parameters 
 t_sample = 1;
-tspan = 0:t_sample:80; % Time to stabilization
+tspan = 0:t_sample:100; % Time to stabilization
 numDrones = 3; % Number of drones
-numParam = 4; % Number of parameters
+numParam = 2; % Number of parameters
 n = numParam*numDrones; % Number of states
 searchArea = [100 1]; % metres 
 x0 = normrnd(0, searchArea(1), [n,1]); % Initial state [P1x P1y V1x V1y P2x P2y V2x V2y P3x P3y V3x V3y] 
-x0([3,4,7,8,11,12],1) = zeros(6,1);
+x0([2,4,6],1) = zeros(3,1);
 droneRad = 5; % sensor radius in metres 
 overlap = 0.5; % metres 
 droneDist = 2*droneRad - overlap; %distance from center of one drone to the center of the next drone
@@ -37,11 +37,11 @@ end
 
 %% Set-up - not generalized yet
 % Defining state- space matrices A, B, C, and D for 3 drones. 
-[A,B,C,D] = twoDStateSpace();
+[A,B,C,D] = oneDStateSpace();
 
  %% LQR Control Implementation 
  Q = C'*C;
- R = eye(2*numDrones); % 2 because 2 dimensional
+ R = eye(numDrones); % 2 because 2 dimensional
  [K,~,~] = lqrd(A,B,Q,R,t_sample);
 
  delta_0 = ones(n,1)*40; % something in the overflow
@@ -67,7 +67,7 @@ end
 figure();
 plot(tspan,x(:,1))
 hold on
-plot(tspan,x(:,5))
+plot(tspan,x(:,3))
 hold on
-plot(tspan,x(:,9))
+plot(tspan,x(:,5))
 legend('Position of drone 1', 'Position of drone 2','Position of drone 3')
