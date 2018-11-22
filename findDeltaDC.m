@@ -1,9 +1,8 @@
 function newDelta = findDeltaDC(x,oldDelta,numBins,n)
 
 %% Preliminaries 
-
 % Amount to increase
-smallDelta = ones(n,1)*2;
+smallDelta = ones(n,1)*5;
 
 % Rate of decrease
 nu = ones(n,1)*(numBins-1.9); 

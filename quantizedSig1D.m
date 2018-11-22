@@ -4,7 +4,7 @@ close all;
 
 %% Initializing model parameters 
 t_sample = 1;
-tspan = 0:t_sample:100; % Time to stabilization
+tspan = 0:t_sample:1000; % Time to stabilization
 numDrones = 3; % Number of drones
 numParam = 2; % Number of parameters
 n = numParam*numDrones; % Number of states
@@ -14,6 +14,7 @@ x0([2,4,6],1) = zeros(3,1);
 droneRad = 5; % sensor radius in metres 
 overlap = 0.5; % metres 
 droneDist = 2*droneRad - overlap; %distance from center of one drone to the center of the next drone
+
 %% Determine final position of drones
 xPos = zeros(numDrones,1); %array that contains just the positions in the x direction
 count = 1; 
@@ -44,7 +45,7 @@ end
  R = eye(numDrones); % 2 because 2 dimensional
  [K,~,~] = lqrd(A,B,Q,R,t_sample);
 
- delta_0 = ones(n,1)*40; % something in the overflow
+ delta_0 = ones(n,1)*20; % something in the overflow
  delta = delta_0;
  
  % Initializing signals x and y
@@ -63,7 +64,6 @@ end
  y = y';
  
 %% Plotting
-
 figure();
 plot(tspan,x(:,1))
 hold on
