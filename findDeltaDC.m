@@ -2,10 +2,10 @@ function newDelta = findDeltaDC(x,oldDelta,numBins,n)
 
 %% Preliminaries 
 % Amount to increase
-smallDelta = ones(n,1)*5;
+smallDelta = ones(n,1)*3;
 
 % Rate of decrease
-nu = ones(n,1)*(numBins-1.9); 
+nu = ones(n,1)*(numBins-1.2); 
 
 % Minimum bin size
 L = ones(n,1)*2.5; %droneDist(10)/2

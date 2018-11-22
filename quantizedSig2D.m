@@ -4,7 +4,7 @@ close all;
 
 %% Initializing model parameters 
 t_sample = 1;
-tspan = 0:t_sample:80; % Time to stabilization
+tspan = 0:t_sample:1000; % Time to stabilization
 numDrones = 3; % Number of drones
 numParam = 4; % Number of parameters
 n = numParam*numDrones; % Number of states
@@ -44,7 +44,7 @@ end
  R = eye(2*numDrones); % 2 because 2 dimensional
  [K,~,~] = lqrd(A,B,Q,R,t_sample);
 
- delta_0 = ones(n,1)*40; % something in the overflow
+ delta_0 = ones(n,1)*20; % something in the overflow
  delta = delta_0;
  
  % Initializing signals x and y
