@@ -9,13 +9,12 @@ for i = 1:size(delta,1)
     codebook = [0 (partition(1:length(partition)-1)+partition(2:length(partition)))/5 0]; % initial guess of a partition. 
     [~,x_hat(i)] = quantiz(x(i),partition,codebook); % x_hat holds the quantized values of x. 
 end
-% new_delta(1:n,1) = delta;
 
 for i = 1 : length(x_hat)
     if x_hat(i) > 100 
         x_hat(i) = 100; 
     elseif x_hat(i)<-100
-            x_hat(i)=-100;
+        x_hat(i)=-100;
     end
 end
     

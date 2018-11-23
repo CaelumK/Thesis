@@ -8,12 +8,12 @@ numParams = n/numDrones;
 for drone_i = 1:numDrones
     drone_x = x((drone_i-1)*numParams+1:drone_i*numParams); %states for a single drone
     drone_delta = delta((drone_i-1)*numParams+1:drone_i*numParams);
-    temp_delta = findDeltaDC(drone_x,drone_delta,numBins,numParams); %only need to give it one delta because the delta for all the states of the drone should be the same
+    temp_delta = findDeltaC(drone_x,drone_delta,numBins,numParams); 
     
     for i = 1:size(temp_delta,1)
         partition = temp_delta(i)*(-(numBins-1)/2:(numBins-1)/2); % codewords corresponding to each partition region
-        codebook = [0 (partition(1:length(partition)-1)+partition(2:length(partition)))/2 0]; % initial guess of a partition. 
-        [~,x_hat((drone_i-1)*numParams+1:drone_i*numParams)] = quantiz(drone_x,partition,codebook); % x_hat holds the quantized values of x. 
+        codebook = [0 (partition(1:length(partition)-1)+partition(2:length(partition)))/5 0]; % initial guess of a partition. 
+        [~,x_hat((drone_i-1)*numParams+i)] = quantiz(drone_x(i),partition,codebook); % x_hat holds the quantized values of x. 
     end
     
     new_delta((drone_i-1)*numParams+1:drone_i*numParams,1) = temp_delta;

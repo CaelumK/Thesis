@@ -4,7 +4,7 @@ close all;
 
 %% Initializing model parameters 
 t_sample = 1;
-tspan = 0:t_sample:1000; % Time to stabilization
+tspan = 0:t_sample:500; % Time to stabilization
 numDrones = 3; % Number of drones
 numParam = 2; % Number of parameters
 n = numParam*numDrones; % Number of states
@@ -55,7 +55,7 @@ end
  
  % Find our x
  for i = 2:length(tspan)
-     [dx,delta] = findPos(A, B, K, x(:,i-1), delta, n, numDrones);
+     [dx,delta] = findPosDC(A, B, K, x(:,i-1), delta, n, numDrones);
      x(:,i) = dx - droneDelta;
      y(:,i) = (C*x(:,i))';
  end
