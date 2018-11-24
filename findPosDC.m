@@ -1,6 +1,6 @@
-function [dx,new_delta] = findPosDC(A,B,K,x,delta,n,numDrones)
+function [dx,new_delta] = findPosDC(A,B,K,x,delta,n,numDrones,numBins)
  %% State Estimation 
-numBins = 3;
+%numBins = 3;
 x_hat = zeros(n,1);
 new_delta = zeros(n,1);
 numParams = n/numDrones;

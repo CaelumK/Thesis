@@ -1,7 +1,8 @@
-function [dx,delta] = findPos(A,B,K,x,delta,n,~)
+function [dx,delta] = findPos(A,B,K,x,delta,n,~,numBins)
  %% State Estimation 
-numBins = 3; % Including 1 bin for overflow!
+%numBins = 3; % Including 1 bin for overflow!
 x_hat = zeros(n,1);
+ 
 delta = findDeltaC(x,delta,numBins,n);
 
 for i = 1:size(delta,1)
