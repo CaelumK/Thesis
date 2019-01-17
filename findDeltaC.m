@@ -1,10 +1,10 @@
 function newDelta = findDeltaC(x,oldDelta,numBins,n)
 %% Preliminaries 
 % Amount to increase
-smallDelta = ones(n,1)*1.1;
+smallDelta = ones(n,1)*1.01;
 
 % Rate of decrease
-nu = ones(n,1)*(numBins-1.1); 
+nu = ones(n,1)*1.01; 
 
 % Minimum bin size
 L = ones(n,1)*2.5; %droneDist(10)/2
@@ -26,7 +26,7 @@ if any(abs(h) <= 1)
     h_neg = find(abs(h) <= 1);
     for i = 1:size(Q_bar(h_neg),1)
        if oldDelta(h_neg(i)) > L(h_neg(i))
-           Q_bar(h_neg(i)) = lambda(h_neg(i))/(numBins-nu(h_neg(i)));
+           Q_bar(h_neg(i)) = lambda(h_neg(i))/(nu(h_neg(i)));
        else
            Q_bar(h_neg(i)) = 1; 
        end

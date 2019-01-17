@@ -44,45 +44,41 @@ end
  Q = C'*C;
  R = eye(numDrones); % 2 because 2 dimensional
  [K,~,~] = lqrd(A,B,Q,R,t_sample);
-
- delta_0 = ones(n,1)*40; % something in the overflow
- delta = delta_0;
+ 
+ numBins = [3];
+ EV_x = zeros(n,length(numBins)); %expected value
+ 
+ for j = 1 : length(numBins)
+ delta = ones(n,1)*20; % something in the overflow
  
  % Initializing signals x and y
  x = zeros(n,length(tspan));
  x(:,1) = x0;
  y = zeros(n-numParam,size(tspan,2));
- 
- numBins = [3:20 30:10:120];
- EV_x = zeros(n,length(numBins));
- 
- for j = 1 : length(numBins)
- x = zeros(n,length(tspan));
- x(:,1) = x0;
  % Find our x
  for i = 2:length(tspan)
      [dx,delta] = findPosDC(A, B, K, x(:,i-1), delta, n, numDrones, numBins(j));
      x(:,i) = dx - droneDelta;
-    % y(:,i) = (C*x(:,i))';
+%      y(:,i) = (C*x(:,i))';
  end
  
  x = x';
  y = y';
  
- EV_x(:,j) = (sum(x,1)/length(tspan)).^2;
+ EV_x(:,j) = (sum(x.^2,1)/length(tspan));
  
 %% Plotting
-% figure();
-% plot(tspan,x(:,1))
-% hold on
-% plot(tspan,x(:,3))
-% hold on
-% plot(tspan,x(:,5))
-% legend('Position of drone 1', 'Position of drone 2','Position of drone 3')
+figure();
+plot(tspan,x(:,1))
+hold on
+plot(tspan,x(:,3))
+hold on
+plot(tspan,x(:,5))
+legend('Position of drone 1', 'Position of drone 2','Position of drone 3')
  end
- figure()
- plot(numBins,EV_x(1,:))
- hold on 
- plot(numBins,EV_x(3,:))
- hold on
- plot(numBins,EV_x(5,:))
+%  figure()
+%  plot(numBins,EV_x(1,:))
+%  hold on 
+%  plot(numBins,EV_x(3,:))
+%  hold on
+%  plot(numBins,EV_x(5,:))
