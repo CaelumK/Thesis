@@ -8,7 +8,7 @@ numParams = n/numDrones;
 for drone_i = 1:numDrones
     drone_x = x((drone_i-1)*numParams+1:drone_i*numParams); %states for a single drone
     drone_delta = delta((drone_i-1)*numParams+1:drone_i*numParams);
-    temp_delta = findDeltaC(drone_x,drone_delta,numBins,numParams); 
+    temp_delta = findDelta(drone_x,drone_delta,numBins,numParams); 
     
     for i = 1:size(temp_delta,1)
         partition = temp_delta(i)*(-(numBins-1)/2:(numBins-1)/2); % codewords corresponding to each partition region

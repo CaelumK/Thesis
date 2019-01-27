@@ -18,10 +18,10 @@ for i = 1 : length(x_hat)
         x_hat(i)=-100;
     end
 end
-
+    
 %% Get position
 w_t = normrnd(0,1,[n,1]);
 dx = A*x - B*K*x_hat + w_t;
-
+dx = (A- 
 
 end

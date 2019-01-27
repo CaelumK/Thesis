@@ -6,11 +6,11 @@ close all;
 t_sample = 1;
 tspan = 0:t_sample:1000; % Time to stabilization
 numDrones = 3; % Number of drones
-numParam = 2; % Number of parameters
+numParam = 6; % Number of parameters
 n = numParam*numDrones; % Number of states
 searchArea = [100 1]; % metres 
 x0 = normrnd(0, searchArea(1), [n,1]); % Initial state [P1x P1y V1x V1y P2x P2y V2x V2y P3x P3y V3x V3y] 
-x0([2,4,6],1) = zeros(3,1);
+x0([4,5,6,10,11,12,16,17,18],1) = zeros(9,1);
 droneRad = 5; % sensor radius in metres 
 overlap = 0.5; % metres 
 droneDist = 2*droneRad - overlap; %distance from center of one drone to the center of the next drone
@@ -35,15 +35,16 @@ droneDelta = zeros(n,1); %array that tells us the desired positions of the drone
 %    index = find(xPosSort == xPos(i));
 %    droneDelta(numParam*i-numParam+1,1) = droneRad + (index-1)*droneDist;
 % end
-droneDelta = [0 0 10 0 20 0]';
+droneDelta = [0 0 0 0 0 0 50 0 0 0 0 0 100 0 0 0 0 0]';
 
 %% Set-up - not generalized yet
 % Defining state- space matrices A, B, C, and D for 3 drones. 
-[A,B,C,D] = oneDStateSpace();
+[A,B,C,D] = threeDStateSpace();
 
  %% LQR Control Implementation 
- Q = (C-droneDelta)'*(C-droneDelta); %state multiplier
- R = eye(numDrones); % 2 because 2 dimensional, control multiplier
+%  Q = (C-droneDelta)'*(C-droneDelta); %state multiplier
+ Q = C'*C;
+ R = eye(3*numDrones); % 2 because 2 dimensional, control multiplier
  [K,~,~] = lqrd(A,B,Q,R,t_sample);
  
  numBins = [50];
@@ -71,12 +72,18 @@ droneDelta = [0 0 10 0 20 0]';
  
 %% Plotting
 figure();
-plot(tspan,x(:,1))
+% plot(tspan,x(:,1))
+plot3(x(:,1),x(:,2),x(:,3))
 hold on
-plot(tspan,x(:,3))
+% plot(tspan,x(:,7))
+plot3(x(:,7),x(:,8),x(:,9))
 hold on
-plot(tspan,x(:,5))
+% plot(tspan,x(:,13))
+plot3(x(:,13),x(:,14),x(:,15))
 legend('Position of drone 1', 'Position of drone 2','Position of drone 3')
+xlabel('X-Position');
+ylabel('Y-Position');
+zlabel('Z-Position');
  end
 %  figure()
 %  plot(numBins,EV_x(1,:))

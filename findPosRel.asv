@@ -1,27 +1,29 @@
-function [dx,delta] = findPos(A,B,K,x,delta,n,~,numBins)
+function [dx,delta] = findPosRel(A,B,K,x,delta,n,~,numBins,y)
  %% State Estimation 
 %numBins = 3; % Including 1 bin for overflow!
-x_hat = zeros(n,1);
+y_hat = zeros(n,1);
  
-delta = findDelta(x,delta,numBins,n);
+delta = findDelta(y,delta,numBins,n);
 
 for i = 1:size(delta,1)
     partition = delta(i)*(-(numBins-1)/2:(numBins-1)/2); % codewords corresponding to each partition region
     codebook = [0 (partition(1:length(partition)-1)+partition(2:length(partition)))/5 0]; % initial guess of a partition. 
-    [~,x_hat(i)] = quantiz(x(i),partition,codebook); % x_hat holds the quantized values of x. 
+    [~,y_hat(i)] = quantiz(y(i),partition,codebook); % x_hat holds the quantized values of x. 
 end
 
-for i = 1 : length(x_hat)
-    if x_hat(i) > 100 
-        x_hat(i) = 100; 
-    elseif x_hat(i)<-100
-        x_hat(i)=-100;
+for i = 1 : length(y_hat)
+    if y_hat(i) > 100 
+        y_hat(i) = 100; 
+    elseif y_hat(i)<-100
+        y_hat(i)=-100;
     end
-end
+% end
+
+x_hat = y + [0 0 y(1) 0 y(1)+y(3) 0]';
 
 %% Get position
 w_t = normrnd(0,1,[n,1]);
 dx = A*x - B*K*x_hat + w_t;
 
-
 end
+
